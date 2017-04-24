@@ -1,0 +1,87 @@
+robot:
+  robot_specifications:
+    - footprint:
+        footprint_specifications:
+          radius: 0.15
+          points: 
+            - point:
+                x: -0.272
+                y: -0.1869
+            - point:
+                x: -0.272
+                y: -0.0331
+            - point:
+                x: -0.326
+                y: -0.031
+            - point:
+                x: -0.326
+                y: 0.031
+            - point:
+                x: -0.272
+                y: 0.0325
+            - point:
+                x: -0.272
+                y: 0.1875
+            - point:
+                x: 0.272
+                y: 0.1875
+            - point:
+                x: 0.272
+                y: 0.0865
+            - point:
+                x: 0.316
+                y: 0.0425
+            - point:
+                x: 0.316
+                y: -0.0425
+            - point:
+                x: 0.272
+                y: -0.0865
+            - point:
+                x: 0.272
+                y: -0.1875
+                
+    - initial_pose:
+        x: 0
+        y: 0
+        theta: 0
+        
+    - kinematic:
+        kinematic_specifications:
+          kinematic_model: omni
+        
+    - laser:
+        laser_specifications:
+          max_angle: 1.57
+          min_angle: -1.57
+          max_range: 5.5999
+          min_range: 0.0199
+          num_rays: 250
+          frequency: 10
+          frame_id: base_laser_front_link
+          pose:
+            x: 0.3
+            y: 0
+            theta: 0
+          noise:
+            noise_specifications:
+              noise_mean: 0.0
+              noise_std: 0.05
+              
+    - laser:
+        laser_specifications:
+          max_angle: 1.57
+          min_angle: -1.57
+          max_range: 5.5999
+          min_range: 0.0199
+          num_rays: 250
+          frequency: 10
+          frame_id: base_laser_rear_link
+          pose:
+            x: -0.3
+            y: 0
+            theta: 3.14159
+          noise:
+            noise_specifications:
+              noise_mean: 0.0
+              noise_std: 0.05

@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<launch>
+	<!-- Content gathered from b-it-bots@Work repo -->
+
+    	<node pkg="stdr_server" type="stdr_server_node" name="stdr_server" output="screen" args="$(find stdr_resources)/maps/sparse_obstacles.yaml" >
+        	<remap from="/map" to="/map_ground_truth"/>
+    	</node>
+
+	<node pkg="nodelet" type="nodelet" name="robot_manager"  args="manager" > 
+		<remap from="/robot0/cmd_vel" to="/cmd_vel"/>
+		<remap from="/robot0/base_laser_rear_link" to="/scan_rear"/>
+		<remap from="/robot0/base_laser_front_link" to="/scan_front"/>
+		<remap from="/robot0/odom" to="/odom"/>
+		<remap from="/map" to="/map_ground_truth"/>
+	</node>
+	
+	<node name="stdr_gui" pkg="stdr_gui" type="stdr_gui_node" >
+		<remap from="/robot0/cmd_vel" to="/cmd_vel" />
+		<remap from="/robot0/base_laser_rear_link" to="/scan_rear" />
+		<remap from="/robot0/base_laser_front_link" to="/scan_front" />
+		<remap from="/map" to="/map_ground_truth" />
+	</node>
+
+	<node pkg="stdr_robot" type="robot_handler" name="$(anon robot_spawn)" args="add $(find g3_stdr_simulator)/ros/config/youbot.yaml 5.0 5.0 0.0" />
+
+	<!-- publish map frame -->
+	<node pkg="tf" type="static_transform_publisher" name="world2map" 
+	args="0 0 0 0 0 0  world map 100" />
+	
+	<!-- publish base_footprint frame -->
+	<node pkg="tf" type="static_transform_publisher" name="base_footprint_frame_pub" 
+	args="0 0 0 0 0 0  robot0 base_footprint 100" />
+
+	<!-- publish base_link frame -->
+	<node pkg="tf" type="static_transform_publisher" name="base_link_frame_pub" 
+	args="0 0 0 0 0 0  base_footprint base_link 100" />
+	
+	<!-- publish hokuyo rear base_laser_rear_link frame -->
+	<node pkg="tf" type="static_transform_publisher" name="hokuyo_rear_frame_pub" 
+	args="0 0 0 0 0 0  robot0_base_laser_rear_link base_laser_rear_link 100" />
+	
+	<!-- publish hokuyo front base_laser_front_link frame -->
+	<node pkg="tf" type="static_transform_publisher" name="hokuyo_front_frame_pub" 
+	args="0 0 0 0 0 0  robot0_base_laser_front_link base_laser_front_link 100" />
+
+    
+</launch>
+
