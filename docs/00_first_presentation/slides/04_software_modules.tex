@@ -1,0 +1,46 @@
+% !TeX encoding = UTF-8
+% !TeX spellcheck = en_US
+% !TeX root = ../00_first_presentation.tex
+\section{Software Modules}
+\begin{frame}{Software Modules}
+    \centering \includegraphics[width=0.9\textwidth]{slides/gfx/software_modules}
+\end{frame}
+
+%\subsection{Complexity}
+%\begin{frame}{Complexity}
+%    \begin{itemize}
+%        \item High complexity, but easy to maintain
+%        \begin{itemize}
+%            \item Software splitted into several modules
+%            \item Modules are easy replaceable
+%        \end{itemize}
+%        \item Interfaces, specified by \dots
+%        \begin{itemize}
+%            \item Topic names
+%            \item Message types
+%        \end{itemize}
+%        \item Modules can subscribe to topics as needed
+%    \end{itemize}
+%\end{frame}
+
+\subsection{Complexity}
+\begin{frame}{Complexity}
+    \begin{block}{System}
+        \begin{itemize}
+            \item High complexity, but easy to maintain
+            \item Split into several modules
+        \end{itemize}
+    \end{block}
+    \begin{block}{Modules}
+        \begin{itemize}
+            \item Represent ROS nodes
+            \item Easy replaceable
+        \end{itemize}
+    \end{block}
+    \begin{block}{Interfaces}
+        \begin{itemize}
+            \item Specified by topic names and message types
+            \item Modules subscribe to topics as needed
+        \end{itemize}
+    \end{block}
+\end{frame}

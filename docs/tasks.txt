@@ -1,0 +1,39 @@
+Subtasks: 
+1. Perception >> Sense environment >> get data 
+2. Mapping >> Sonar map
+3. Localization >> Particle filter or kalman filter
+Problems or challenges in localization: 
+i. Robot may get lost because many landmarks looks same.
+ii. Errors in sensors.
+iii. 
+4. Path planning >> searches such as A* 
+5. Obstacle avoidance >> With the help of sensors such as RGB-D camera,Laser scanners
+challenges: What if there are static and dynamic obstacles.
+
+6. Motion control >> Path 
+Execution and acting 
+
+
+===========================================
+1.. Explain BNT  == Tasks from pdf (picture?)
+2. Sub-tasks  and problems/challenges  :
+	i. Perception: reading sensor data. such as camera, laser scanner etcetra
+			challenges: sensor noise, calibration, barrier tape 
+	ii. Localization: To know position of robot 
+			challenges:
+	iii. Mapping: Get map of environment 
+			Challenges: exploration using remote control or autonomous
+	iv. Path planning: plan path 
+			Challenges: 
+	v. Motion Control: simple definition
+			Challenges: 
+3. YouBot description: simple details from YouBot manual. 
+4. ROS: diagram(client, masteR) , nodes, topics, messages 
+5. Software modules/components: YouBot driver,   
+6. Possible solutions for each module(E.g for localization: Particle filter, etcetra) 
+7. Complexity of software
+
+9. Workplan 
+.
+============================================
+
