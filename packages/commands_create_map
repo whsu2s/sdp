@@ -1,0 +1,5 @@
+1. roslaunch stdr_launchers server_with_map_and_gui_plus_robot.launch
+2. rosrun gmapping slam_gmapping scan:=/robot0/laser_0 _base_frame:="/robot0"  map:=/gmapping/map
+3. rosrun stdr_samples stdr_obstacle_avoidance robot0 laser_0
+4. roslaunch stdr_launchers  rviz.launch
+
