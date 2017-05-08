@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<launch>
+	<node name="mapping" pkg="gmapping" type="slam_gmapping" >
+		<remap from="scan" to="/scan_front" />
+		<remap from="map" to="/map" />
+	</node>
+</launch>
+
