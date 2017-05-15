@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<launch>
+	<node type="youbot_driver_ros_interface" pkg="youbot_driver_ros_interface" name="youbot_driver_ros_interface"/>
+	<node type="hokuyo_node" pkg="hokuyo_node" name="hokuyo_front_node">
+		<rosparam command="load" file="$(find g3_youbot)/config/laser_front.yaml"/>
+		<remap from="/scan" to="/scan_front"/>
+	</node>
+	<node type="hokuyo_node" pkg="hokuyo_node" name="hokuyo_rear_node">
+		<rosparam command="load" file="$(find g3_youbot)/config/laser_rear.yaml"/>
+		<remap from="/scan" to="/scan_rear"/>
+	</node>
+
+	<node pkg="tf" type="static_transform_publisher" name="tf_scan_front" args="0.3 0 0 0 0 0 1.0 /base_link /base_laser_front_link 100" />
+	<node pkg="tf" type="static_transform_publisher" name="tf_scan_rear" args="-0.3 0 0 0 0 1.0 0 /base_link /base_laser_rear_link 100" />
+	<node pkg="tf" type="static_transform_publisher" name="tf_base_link" args="0 0 0 0 0 0 1 /base_footprint /base_link 100" />
+	<node type="teleop_node" pkg="teleop_twist_joy" name="teleop_node"/>
+	<node type="joy_node" pkg="joy" name="joy_node"/>
+</launch>
