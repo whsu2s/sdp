@@ -2,8 +2,6 @@
 <launch>
     <node pkg="topic_tools" type="relay" name="relay_scan_front" args="/scan_front /scan_combined" />
     <node pkg="topic_tools" type="relay" name="relay_scan_rear" args="/scan_rear /scan_combined" />
-    <!-- Run a static transform between /odom and /map -->
-    <node pkg="tf" type="static_transform_publisher" name="odom_to_map" args="0 0 0 0 0 0  /map /odom 10" />
 
     <node name="g3_amcl" pkg="amcl" type="amcl" output="screen">
         <remap from="scan" to="/scan_combined"/>
