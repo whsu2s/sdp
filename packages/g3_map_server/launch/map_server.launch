@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <launch>
-	  <arg name="map_file" default="$(find g3_environments)/danning/mapg3.yaml"/>
+	  <arg name="map_file" default="$(find g3_environments)/c025/map.yaml"/>
 
 	<node name="g3_map_server" pkg="map_server" type="map_server" args="$(arg map_file)">
 		<remap from="map" to="/map" />
