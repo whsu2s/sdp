@@ -7,19 +7,17 @@
 \frametitle {Frames description}
  
  \begin{columns}
- \begin{column}{0.5\textwidth}
+ \begin{column}{0.8\textwidth}
 		\begin{itemize}
 		\item map
  			 \begin{itemize}
   				\item map is a world fixed frame
- 				 \item  discrete
- 				 \item useful as a long-term global reference, but discrete jumps in position estimators make it a poor reference frame for local sensing and acting
+ 				 \item discrete property make it a poor reference frame for local sensing and acting
   			\end{itemize}
 		\item odom
 		\begin{itemize}
-			\item  pose of a mobile platform in the odom frame can drift over time, without any bounds
-			\item continuous 
-			\item  useful as an accurate, short-term local reference, but drift makes it a poor frame for long-term reference
+			\item  pose of robot in the odom frame can drift over time
+			\item  useful as an accurate, short-term local reference
 		\end{itemize}
 	\item base\_footprint
 		\begin{itemize}
@@ -33,7 +31,7 @@
 \end{column} 
  
 
-\begin{column}{0.5\textwidth}  %%<--- here
+\begin{column}{0.25\textwidth}  %%<--- here
 \includegraphics[width=\textwidth]{slides/gfx/frames_cleaned}
 \end{column}
 \end{columns}
