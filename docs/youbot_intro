@@ -1,0 +1,116 @@
+=== Navigation steps on Youbot ====
+
+to check whether you can connect with youbot 
+you must be on same network as "youbot" that is bit_bots(wifi)
+ping youbot-brsu-2-pc1-lan (you will receive some data packets in response, if robot is connected using ethernet cable)
+ping youbot_brsu-2-pc1 (if robot is connected using wifi)
+=================================================
+username : ssh sdp_ss17_group_3@192.168.1.120 or (ssh sdp_ss17_group_3@youbot-brsu-2-pc1)
+password : sdp_ss17_group_3
+===============================================
+for youbot 2:
+alias yb2="ssh sdp_ss17_group_3@youbot-brsu-2-pc1"
+alias yb2l="ssh sdp_ss17_group_3@youbot-brsu-2-pc1-lan"
+
+====================================================
+for youbot 4:
+alias yb4="ssh sdp_ss17_group_3@youbot-brsu-4-pc1"
+alias yb4l="ssh sdp_ss17_group_3@youbot-brsu-4-pc1-lan"
+=====================================================
+you can add these commands in your bashrc file to create alias
+
+alias export_yb2="export ROS_MASTER_URI=http://youbot-brsu-2-pc1:11311"
+alias export_yb2l="export ROS_MASTER_URI=http://youbot-brsu-2-pc1-lan:11311"
+alias export_yb4="export ROS_MASTER_URI=http://youbot-brsu-4-pc1:11311"
+alias export_yb4l="export ROS_MASTER_URI=http://youbot-brsu-4-pc1-lan:11311"
+
+
+================================================
+Create workspace in youbot 
+source /opt/ros/indigo/setup.bash
+mkdir group3_workspace
+cd group3_workspace
+mkdir src 
+cd src
+catkin_init_workspace
+cd .. 
+cd devel
+source setup.bash
+catkin build
+
+
+=============================
+youbot_driver(repo) is generally to provide drivers of youbot as an application, but not in ros
+youbot_driver_ros_interface(repo) provides drivers of youbot in ros 
+
+
+go to src folder
+git clone  -b indigo-driver https://github.com/mas-group/youbot_driver.git (depends on you, whether you want to clone this or not, for ROS you don't have to clone it)
+git clone -b indigo-driver https://github.com/mas-group/youbot_driver_ros_interface.git
+git clone group3(already created local repo, where we integrated modules for simulation)
+ 
+======================================
+
+cd group3 
+create pkg for youbot in group3 repo
+catkin_create_pkg "g3_youbot"
+cd g3_youbot
+create launch file (mkdir)
+cd launch 
+In launch file, you need create nodes for laser scanner(by loading .yaml file) 
+cd ..
+mkdir config
+create laser_front.yaml file (minimum and maximum angle, port, frame id)
+create laser_rear.yaml file (minimum and maximum angle, port, frame id)
+
+======================================
+Now install teleop_joystick 
+sudo apt-get install teleop_joystick (you need to confirm it from ros website)
+
+
+===============================
+
+Now to build the map :
+roslaunch g3_youbot youbot.launch (contains tf, joystick node)
+roslaunch g3_mapping mapping.launch (you need to tune the parameters of launch file if it does not works properly)
+
+you should be able to move the youbot with joystick
+
+build the map and save it using:
+rosrun map_server map_saver -f map_name
+
+================================
+go to your local terminal  
+To run Rviz, locally, use 
+export_yb2l
+rosrun rviz rviz
+
+
+================================
+
+Now to localize the robot, 
+amcl needs initial pose(provided from rviz), laser data(it can subscribe from scan topics), map(from map_server) 
+
+roslaunch g3_youbot youbot.launch 
+roslaunch g3_amcl amcl.launch
+roslaunch map_server map_name 
+
+go to your local terminal 
+export_yb2l
+rosrun rviz rviz
+
+================================ 
+Now lets create one launch file, that includes multiple launch files(e.g: amcl, map_server, youbot) 
+Package name: bring_up
+create_catkin_pkg
+mkdir launch 
+
+to include multiple launch files into single launch file 
+google for "roslaunch include"
+ 
+for every launch file, you need specify "include file = "$(find package_name)/directory of launch file" 
+
+save it, do catkin build 
+source ~/.bashrc 
+roslaunch bring_up bring_up.launch
+=================================
