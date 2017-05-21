@@ -4,8 +4,42 @@
 
 %----------------------------------------------------------------
 \begin{frame}{Frame 1}
-\frametitle {Title}
+\frametitle {Frames description}
  
+ \begin{columns}
+ \begin{column}{0.5\textwidth}
+		\begin{itemize}
+		\item map
+ 			 \begin{itemize}
+  				\item map is a world fixed frame
+ 				 \item  discrete
+ 				 \item useful as a long-term global reference, but discrete jumps in position estimators make it a poor reference frame for local sensing and acting
+  			\end{itemize}
+		\item odom
+		\begin{itemize}
+			\item  pose of a mobile platform in the odom frame can drift over time, without any bounds
+			\item continuous 
+			\item  useful as an accurate, short-term local reference, but drift makes it a poor frame for long-term reference
+		\end{itemize}
+	\item base_footprint
+		\begin{itemize}
+		\item robot position on the ground
+		\item used for object avoidance
+		\end{itemize}
+	\item base_link
+	\item base_laser_front_link
+	\item base_laser_rear_link
+	\end{itemize}
+	\end{column} 
+ 
+
+\begin{column}{0.5\textwidth}  %%<--- here
+
+    \begin{figure}
+     \includegraphics[width=0.5\textwidth]{frames.pdf}
+    \end{figure}
+\end{column}
+\end{columns}
 
  
 \end{frame}
