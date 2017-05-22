@@ -1,0 +1,39 @@
+% !TeX spellcheck = en_US
+% !TeX encoding = UTF-8
+\documentclass[10pt,aspectratio=1610,xcolor={usenames,dvipsnames,table}]{beamer}
+\mode<presentation>
+\input{config}
+
+
+\definecolor{brsu_blue}{HTML}{0BA1E2}
+
+\setbeamercolor{title separator}{fg=brsu_blue}
+\setbeamercolor{progress bar}{fg=brsu_blue}
+\setbeamercolor{normal text}{fg=black,bg=white}
+\setbeamercolor{frametitle}{bg=brsu_blue,fg=white}
+
+\title{Software Development Project}
+\subtitle{Basic Navigation Test Analysis}
+\titlegraphic{\includegraphics[width=5cm]{gfx/logo}}
+\author{Wei-Chan Hsu, Torsten Jandt, Ramesh Kumar, Danning Wang}
+\date{\today}
+
+\setbeamertemplate{caption}{\raggedright\insertcaption\par}
+
+
+
+\setbeamerfont{footnote}{size=\tiny}
+
+\begin{document}
+
+\begin{frame}[noframenumbering,plain]
+\titlepage
+\end{frame}
+
+\input{slides/00_launch.tex}
+\input{slides/01_rqt.tex}
+\input{slides/02_tf.tex}
+\input{slides/03_problem.tex}
+
+
+\end{document}
