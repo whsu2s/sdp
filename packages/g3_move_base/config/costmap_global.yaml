@@ -1,0 +1,7 @@
+  global_frame: /map
+  robot_base_frame: base_footprint  # default base_link
+  update_frequency: 5.0
+  publish_frequency: 0.0
+  static_map: true
+  inflation_radius: 0.36   #default: 0.55
+
