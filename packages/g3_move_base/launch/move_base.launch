@@ -1,12 +1,5 @@
 <?xml version="1.0"?>
 <launch>
-  <!-- <arg name="cmd_vel_topic" default="cmd_vel" / > -->
-
-  <!-- depending on imu fusion, this topic could change over time -->
- <!--  <arg name="odom_topic" default="odom" />  -->
-
-  <!-- work around for footprint reload -->
-  <!-- <rosparam command="delete" ns="move_base" /> -->
 
   <!-- the actual move base node -->
   <node pkg="move_base" type="move_base" name="move_base" respawn="false" output="screen">
@@ -15,8 +8,7 @@
     <rosparam file="$(find g3_move_base)/config/costmap_local.yaml" command="load" ns="local_costmap" />
     <rosparam file="$(find g3_move_base)/config/costmap_global.yaml" command="load" ns="global_costmap" />
     <rosparam file="$(find g3_move_base)/config/base_local_planner.yaml" command="load" />
-   <!-- <remap from="cmd_vel" to="$(arg cmd_vel_topic)"/> -->
-   <!--  <remap from="odom" to="$(arg odom_topic)"/> -->
+
   </node>
 
 

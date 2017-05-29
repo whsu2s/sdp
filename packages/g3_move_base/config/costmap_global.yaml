@@ -1,7 +1,7 @@
   global_frame: /map
-  robot_base_frame: base_footprint  # default base_link
+  robot_base_frame: base_footprint 
   update_frequency: 5.0
   publish_frequency: 0.0
-  static_map: true
+  static_map: true # true if map is being provided from map server        
   inflation_radius: 0.36   #default: 0.55
 
