@@ -1,0 +1,7 @@
+<?xml version="0.0"?>
+<launch>
+
+      <include file="$(find g3_youbot)/ros/launch/youbot.launch"/>
+      <include file="$(find g3_mapping)/ros/launch/mapping.launch"/> 
+
+</launch>
