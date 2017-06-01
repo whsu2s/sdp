@@ -3,11 +3,11 @@
 	<param name="youBotDriverCycleFrequencyInHz" type="double" value="50.0"/>
 	<node type="youbot_driver_ros_interface" pkg="youbot_driver_ros_interface" name="youbot_driver_ros_interface"/>
 	<node type="hokuyo_node" pkg="hokuyo_node" name="hokuyo_front_node">
-		<rosparam command="load" file="$(find g3_youbot)/config/laser_front.yaml"/>
+		<rosparam command="load" file="$(find g3_youbot)/ros/config/laser_front.yaml"/>
 		<remap from="/scan" to="/scan_front"/>
 	</node>
 	<node type="hokuyo_node" pkg="hokuyo_node" name="hokuyo_rear_node">
-		<rosparam command="load" file="$(find g3_youbot)/config/laser_rear.yaml"/>
+		<rosparam command="load" file="$(find g3_youbot)/ros/config/laser_rear.yaml"/>
 		<remap from="/scan" to="/scan_rear"/>
 	</node>
 

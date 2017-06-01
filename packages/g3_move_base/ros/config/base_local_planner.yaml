@@ -15,4 +15,5 @@ TrajectoryPlannerROS:
   acc_lim_y: 0.7 # default 2.5
 
   holonomic_robot: true
-  
+
+ # y_vels: '-0.6, -0.1, 0.1, 0.6'   
