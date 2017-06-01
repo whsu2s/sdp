@@ -3,6 +3,7 @@
 
       <include file="$(find g3_youbot)/ros/launch/youbot.launch"/>
       <include file="$(find g3_map_server)/ros/launch/map_server.launch"/>
-      <include file="$(find g3_amcl)/ros/launch/amcl.launch"/> 
+      <include file="$(find g3_amcl)/ros/launch/amcl.launch"/>
+      <include file="$(find g3_move_base)/ros/launch/move_base.launch"/> 
 
 </launch>

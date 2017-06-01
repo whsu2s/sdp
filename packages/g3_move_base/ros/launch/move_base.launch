@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <launch>
-  <node pkg="move_base" type="move_base" name="move_base" respawn="false" output="screen">
-    <rosparam file="$(find g3_move_base)/ros/config/costmap_common.yaml" command="load" ns="global_costmap" />
-    <rosparam file="$(find g3_move_base)/ros/config/costmap_common.yaml" command="load" ns="local_costmap" />
-    <rosparam file="$(find g3_move_base)/ros/config/costmap_local.yaml" command="load" ns="local_costmap" />
-    <rosparam file="$(find g3_move_base)/ros/config/costmap_global.yaml" command="load" ns="global_costmap" />
-    <rosparam file="$(find g3_move_base)/ros/config/base_local_planner.yaml" command="load" />
-   <!-- <remap from="cmd_vel" to="$(arg cmd_vel_topic)"/> -->
-  </node>
-
-
+    <node pkg="move_base" type="move_base" name="move_base" respawn="false" output="screen">
+        <rosparam file="$(find g3_move_base)/ros/config/move_base.yaml" command="load" />
+        <rosparam file="$(find g3_move_base)/ros/config/global_planner.yaml" command="load" />
+        <rosparam file="$(find g3_move_base)/ros/config/local_planner.yaml" command="load" />
+        <rosparam file="$(find g3_move_base)/ros/config/costmap_common.yaml" command="load" ns="global_costmap" />
+        <rosparam file="$(find g3_move_base)/ros/config/costmap_common.yaml" command="load" ns="local_costmap" />
+        <rosparam file="$(find g3_move_base)/ros/config/costmap_local.yaml" command="load" ns="local_costmap" />
+        <rosparam file="$(find g3_move_base)/ros/config/costmap_global.yaml" command="load" ns="global_costmap" />
+        <!-- <remap from="cmd_vel" to="$(arg cmd_vel_topic)"/> -->
+    </node>
 </launch>
