@@ -2,9 +2,9 @@ global_frame: odom
 robot_base_frame: base_footprint
 update_frequency: 5.0
 publish_frequency: 0.0
-static_map: false
-rolling_window: true
-width: 6.0
+static_map: false 
+rolling_window: true # true means costmap remain centered around the robot as the robot moves through the world
+width: 6.0  # width of map 
 height: 6.0
 resolution: 0.02
 inflation_radius: 0.1
