@@ -36,6 +36,7 @@ def sender():
 	    pos.pose.orientation.z = value[2]
 	
 	    rospy.loginfo('goal sent')
+	    rospy.loginfo('goal is being executed')
 	    pub.publish(pos)
     # #     # rate.sleep()
 	else:
