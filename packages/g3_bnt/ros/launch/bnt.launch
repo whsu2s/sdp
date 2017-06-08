@@ -1,6 +1,9 @@
 <?xml version="0.0"?>
 <launch>
-
+     <include file="$(find g3_youbot)/ros/launch/youbot.launch"/>
+      <include file="$(find g3_map_server)/ros/launch/map_server.launch"/>
+      <include file="$(find g3_amcl)/ros/launch/amcl.launch"/>
+      <include file="$(find g3_move_base)/ros/launch/move_base.launch"/>
      <node pkg = "g3_bnt" type="bnt.py" name="bnt" output="screen">
          <param name="goals_file" value="$(find g3_environments)/c025/goals.txt" />
     </node>
