@@ -5,7 +5,7 @@ from std_msgs.msg import String
 import tf
 
 def sender():
-    pub = rospy.Publisher('loc', PoseStamped, queue_size=10)
+    pub = rospy.Publisher('goal', PoseStamped, queue_size=10)
     rospy.init_node('input_test')
     file_name = rospy.get_param("bnt/goals_file")
     file = open(file_name,"r")
