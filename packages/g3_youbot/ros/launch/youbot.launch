@@ -11,6 +11,12 @@
 		<remap from="/scan" to="/scan_rear"/>
 	</node>
 
+    	<!--<node pkg="cob_scan_unifier" type="scan_unifier_node" name="scan_unifier" output="log">
+  		<rosparam param="input_scans">["/scan_front","/scan_rear"]</rosparam>
+  		<param name="loop_rate" value="20.0"/>
+    	<remap from="scan_unified" to="/scan_combined"/>
+  	</node>-->
+
 	<node pkg="tf" type="static_transform_publisher" name="tf_scan_front" args="0.3 0 0 1.0 0 0 0 /base_link /base_laser_front_link 100" />
 	<node pkg="tf" type="static_transform_publisher" name="tf_scan_rear" args="-0.3 0 0 0 1.0 0 0  /base_link /base_laser_rear_link 100" />
 	<node pkg="tf" type="static_transform_publisher" name="tf_base_link" args="0 0 0 0 0 0 1 /base_footprint /base_link 100" />
