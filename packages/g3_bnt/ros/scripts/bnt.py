@@ -2,8 +2,7 @@
 import rospy
 from geometry_msgs.msg import PoseStamped
 from std_msgs.msg import String
-import numpy as np
-from io import StringIO
+import tf
 
 def sender():
     pub = rospy.Publisher('loc', PoseStamped, queue_size=10)
@@ -31,9 +30,12 @@ def sender():
 	    rospy.loginfo("workspace entered :" + str(loc))
 		
 	    value = database[loc]
-	    pos.pose.position.x = value[0]
-	    pos.pose.position.y = value[1]
-	    pos.pose.orientation.z = value[2]
+	    # Euler to quaternion
+	    q = tf.transformations.quaternion_from_euler(value[0], value[1], value[2])
+	    pos.pose.orientation.x = q[0]
+	    pos.pose.orientation.y = q[1]
+	    pos.pose.orientation.z = q[2]
+	    pos.pose.orientation.w = q[3]
 	
 	    rospy.loginfo('goal sent')
 	    rospy.loginfo('goal is being executed')
