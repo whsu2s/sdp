@@ -2,31 +2,38 @@
 import rospy
 from geometry_msgs.msg import PoseStamped
 from std_msgs.msg import String
+import numpy as np
+from io import StringIO
 
 def sender():
     pub = rospy.Publisher('loc', PoseStamped, queue_size=10)
     rospy.init_node('input_test')
-    rate = rospy.Rate(10)
+    file = open("goal.txt","r")
+    #print file
+    file_list =  file.readlines()
+    database = dict()
+
+    for i in file_list:
+    	temp = [s.strip() for s in i.split(' ')]
+    	key = temp[0]
+    	value = [float(s) for s in temp[1:4]]
+    	database[key] = value
+    print database	
+
+    # rate = rospy.Rate(10)
     pos = PoseStamped()
 
     while not rospy.is_shutdown():
         loc = raw_input()
-        if loc == 'pos0':
-            pos.pose.position.x = 0.0
-            pos.pose.position.y = 0.0
-            pos.pose.orientation.z = 0
-        elif loc == 'pos1':
-            pos.pose.position.x = 0.0
-            pos.pose.position.y = 10.0
-            pos.pose.orientation.z = 0.5
-        elif loc == 'pos2':
-            pos.pose.position.x = 10.0
-            pos.pose.position.y = 5.0
-            pos.pose.orientation.z = 0.5
+        value = database[loc]
+        pos.pose.position.x = value[0]
+        pos.pose.position.y = value[1]
+        pos.pose.orientation.z = value[2]
+        
 
-        rospy.loginfo('pose')
+        rospy.loginfo('goal sent')
         pub.publish(pos)
-        rate.sleep
+    # #     # rate.sleep()
 
 if __name__ == '__main__':
     sender()
