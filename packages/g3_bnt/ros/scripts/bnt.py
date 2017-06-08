@@ -32,8 +32,8 @@ def sender():
 	    value = database[loc]
 	    # Euler to quaternion
 	    q = tf.transformations.quaternion_from_euler(value[0], value[1], value[2])
-	    pos.pose.orientation.x = q[0]
-	    pos.pose.orientation.y = q[1]
+	    pos.pose.position.x = value[0]
+	    pos.pose.position.y = value[1]
 	    pos.pose.orientation.z = q[2]
 	    pos.pose.orientation.w = q[3]
 	
