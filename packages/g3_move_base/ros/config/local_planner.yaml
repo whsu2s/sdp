@@ -14,6 +14,8 @@ DWAPlannerROS:
   acc_lim_x: 0.7 # default 2.5
   acc_lim_y: 0.7 # default 2.5
 
+  yaw_goal_tolerance: 0.05
+  xy_goal_tolerance: 0.02
  # holonomic_robot: true
 
  # y_vels: '-0.6, -0.1, 0.1, 0.6'   
