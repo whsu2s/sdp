@@ -19,6 +19,7 @@ def sender():
     	key = temp[0]
     	value = [float(s) for s in temp[1:4]]
     	database[key] = value
+    
     print database	
 
     # rate = rospy.Rate(10)
@@ -26,14 +27,19 @@ def sender():
 
     while not rospy.is_shutdown():
         loc = raw_input()
-        value = database[loc]
-        pos.pose.position.x = value[0]
-        pos.pose.position.y = value[1]
-        pos.pose.orientation.z = value[2]
-        
-        rospy.loginfo('goal sent')
-        pub.publish(pos)
+	if (loc in database):
+	    rospy.loginfo("workspace entered :" + str(loc))
+		
+	    value = database[loc]
+	    pos.pose.position.x = value[0]
+	    pos.pose.position.y = value[1]
+	    pos.pose.orientation.z = value[2]
+	
+	    rospy.loginfo('goal sent')
+	    pub.publish(pos)
     # #     # rate.sleep()
+	else:
+	    print "please enter valid workspace"
 
 if __name__ == '__main__':
     sender()
