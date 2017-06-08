@@ -1,0 +1,7 @@
+<?xml version="0.0"?>
+<launch>
+
+     <node pkg = "g3_bnt" type="bnt.py" name="bnt">
+         <param name="goals_file" value="$(find g3_environments)/c025/goals.txt" />
+    </node>
+</launch>
