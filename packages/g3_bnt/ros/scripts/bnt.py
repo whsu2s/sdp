@@ -4,7 +4,7 @@ from geometry_msgs.msg import PoseStamped
 from std_msgs.msg import String
 import tf
 from math import radians, degrees
-
+from std_srvs.srv import Empty
 
 def sender():
     pub = rospy.Publisher('move_base_simple/goal', PoseStamped, queue_size=10)
@@ -25,12 +25,11 @@ def sender():
     print "list of workspaces \n " +str(database)	
 
     pos = PoseStamped()
-
+    rospy.wait_for_service('/move_base/clear_costmaps')
+    cc = rospy.ServiceProxy('/move_base/clear_costmaps',Empty)
     while not rospy.is_shutdown():
-        rospy.wait_for_service('/move_base/clear_costmaps')
-        print "service calling"
         try:
-            cc = rospy.ServiceProxy('/move_base/clear_costmaps', Empty)
+           
             cc() 
         except rospy.ServiceException, e:
             print "Service call failed: %s"%e
@@ -44,6 +43,8 @@ def sender():
 	    q = tf.transformations.quaternion_from_euler(0, 0, value[2])
 	    pos.pose.position.x = value[0]
 	    pos.pose.position.y = value[1]
+            pos.pose.orientation.x = q[0]
+            pos.pose.orientation.y = q[1]
 	    pos.pose.orientation.z = q[2]
 	    pos.pose.orientation.w = q[3]
 	    pos.header.frame_id = 'map'	
