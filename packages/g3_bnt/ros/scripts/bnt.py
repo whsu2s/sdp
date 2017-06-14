@@ -27,6 +27,14 @@ def sender():
     pos = PoseStamped()
 
     while not rospy.is_shutdown():
+        rospy.wait_for_service('/move_base/clear_costmaps')
+        print "service calling"
+        try:
+            cc = rospy.ServiceProxy('/move_base/clear_costmaps', Empty)
+            cc() 
+        except rospy.ServiceException, e:
+            print "Service call failed: %s"%e
+
         loc = raw_input()
 	if (loc in database):
 	    rospy.loginfo("workspace entered :" + str(loc))
