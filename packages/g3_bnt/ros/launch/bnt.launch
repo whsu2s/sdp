@@ -1,7 +1,7 @@
 <?xml version="0.0"?>
 <launch>
      <include file="$(find g3_bringup)/ros/launch/nav.launch" />
-        <node pkg = "g3_bnt" type="bnt.py" name="bnt" output="screen">
+        <node pkg = "g3_bnt" type="path_executor.py" name="bnt" output="screen">
          <param name="goals_file" value="$(find g3_environments)/c025/goals.txt" />
     </node>
 </launch>
