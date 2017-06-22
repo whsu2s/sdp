@@ -9,90 +9,108 @@ import tf
 import actionlib
 from actionlib import SimpleActionClient, SimpleActionServer
 from move_base_msgs.msg import MoveBaseActionGoal, MoveBaseActionFeedback, MoveBaseActionResult,MoveBaseAction
-#from actionlib.msg import GoalID, GoalStatusArray
 from std_srvs.srv import Empty
+
+class Position:
+	def __init__(self,x,y):
+
+		self.x = x
+		self.y = y
+		
+
+class Pose(Position):   
+
+	def __init__(self,x,y,theta):
+
+		Pose.__init__(self,x,y)
+
+		self.theta = theta
+
+# workspace consist of Pose
+class Workspace():
+
+	def __init__(self,x,y,theta,name):
+
+		self.pose = Pose(x,y,theta)
+		self.name = name
+
+
+class Environment():
+
+	def __init__(self,filename):
+
+		# file_name = rospy.get_param(filename)
+		file = open(filename,"r")
+		lines =  file.readlines()
+		self.database = dict()
+
+		for line in lines:
+		
+       	    temp = [s.strip() for s in line.split(' ')]
+	    	workspace_name = temp[0]
+	    	# convert to float
+	    	x = float(temp[1])
+	    	y = float(temp[2])
+	    	theta = float(temp[3])
+			
+			workspace = Workspace(x,y,theta,workspace_name)
+			self.database[workspace_name] = workspace
+
+	def get_workspace(self,name):
+		return self.database[name] 
+
 class PathExecutor:
     
     def __init__(self):
 
-	self._feedback = MoveBaseActionFeedback() 
-	self._result = MoveBaseActionResult()
-        self._ep_client = actionlib.SimpleActionClient('move_base', MoveBaseAction)
-        while True:
-	    goals = self.get_user_input()
-	    print goals
-            self.execute(goals)
-    def get_user_input(self):
-	file_name = rospy.get_param("bnt/goals_file")
-	file = open(file_name,"r")
-	file_list =  file.readlines()
-	database = dict()
+	    self.move_base_client = actionlib.SimpleActionClient('move_base', MoveBaseAction)
+	    self.move_base_client.wait_for_server()
+	    file_name = rospy.get_param("bnt/goals_file")
+	    self.environment = Environment(file_name)
+	    rospy.wait_for_service('/move_base/clear_costmaps')
+		self.clear_costmaps = rospy.ServiceProxy('/move_base/clear_costmaps',Empty)
 
-	for i in file_list:
-		# 
-       	    temp = [s.strip() for s in i.split(' ')]
-	    key = temp[0]
-		# convert to float
-	    value = [float(s) for s in temp[1:4]]
-	    database[key] = value
-		
-        print "list of workspaces \n " +str(database)	
+	def run(self):
 
+	    while True:
+		    goals = self.get_goals()
+	        self.execute_path(goals)
 
-		#while not rospy.is_shutdown():
-		    
+    def get_goals(self):
 						
-        loc = raw_input()
-    
-        workspace = [s.strip() for s in loc.split(' ')]
-	
-	goal_sequence = []
-        print workspace[0]
-	print workspace[1]				#	rospy.loginfo("workspace entered :" + str(loc))
-	for ws in workspace:
-	    value = database[ws]
-		# Euler to quaternion
-	    action_goal = MoveBaseActionGoal()
-	    q = tf.transformations.quaternion_from_euler(0, 0, value[2])
-	    action_goal.goal.target_pose.pose.position.x = value[0]
-	    action_goal.goal.target_pose.pose.position.y = value[1]
+	    loc = raw_input()
+	    
+	    return [self.environment.get_workspace(s.strip()) for s in loc.split(' ')]
+		
+
+	def convert_ws_to_msg(self,workspace):
+
+		action_goal = MoveBaseActionGoal()
+	    q = tf.transformations.quaternion_from_euler(0, 0, workspace.pose.theta)
+	    action_goal.goal.target_pose.pose.position.x = workspace.pose.x
+	    action_goal.goal.target_pose.pose.position.y = workspace.pose.y
 	    action_goal.goal.target_pose.pose.orientation.x = q[0]
 	    action_goal.goal.target_pose.pose.orientation.y = q[1]
 	    action_goal.goal.target_pose.pose.orientation.z = q[2]
 	    action_goal.goal.target_pose.pose.orientation.w = q[3]
 	    action_goal.goal.target_pose.header.frame_id = 'map'
-	    goal_sequence.append(action_goal.goal)
 
-			#else:
-			#	print "please enter valid workspace"
-	return goal_sequence 
-    def execute(self, goal_sequence):
-	rospy.wait_for_service('/move_base/clear_costmaps')
-	cc = rospy.ServiceProxy('/move_base/clear_costmaps',Empty)
-        success = True
-        rospy.loginfo('Received goal.')
-        for current_pose in (goal_sequence):
-            # check that preempt has not been requested by the client
-            
-            self._ep_client.wait_for_server()
-	    cc()
-            self._ep_client.send_goal(current_pose)
-	   # try:
-					   
-	#	cc() 
-	 #   except rospy.ServiceException, e:
-	  #      print "Service call failed: %s"%e
-	    rospy.loginfo('goal sent')
-	    rospy.loginfo('goal is being executed')
-            self._ep_client.wait_for_result()
+	    return action_goal
 
+	def execute_path(self, path):
 
-            state = self._ep_client.get_state()
-            if state == 3:
-                rospy.loginfo("succeeded")
+		for ws in path:
+			msg = self.convert_ws_to_msg(ws)
+			self.clear_costmaps()
+			self.move_base_client.send_goal(msg)
+			finish_before_timeout = self.move_base_client.wait_for_result(rospy.Duration(60))
 
+			if finish_before_timeout:
+	            state = self.move_base_client.get_state()
+	            if state == 3:
+	                rospy.sleep(5)
 
 if __name__ == '__main__':
     rospy.init_node('path_execute')
     path = PathExecutor()
-    rospy.spin()
+    path.run()
