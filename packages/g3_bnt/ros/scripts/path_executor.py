@@ -7,8 +7,8 @@ roslib.load_manifest(PACKAGE)
 import rospy
 import tf
 import actionlib
-from actionlib import SimpleActionClient, SimpleActionServer
-from move_base_msgs.msg import MoveBaseActionGoal, MoveBaseActionFeedback, MoveBaseActionResult,MoveBaseAction
+from actionlib import SimpleActionClient
+from move_base_msgs.msg import MoveBaseGoal, MoveBaseAction
 from std_srvs.srv import Empty
 
 class Position:
@@ -22,7 +22,7 @@ class Pose(Position):
 
 	def __init__(self,x,y,theta):
 
-		Pose.__init__(self,x,y)
+		Position.__init__(self,x,y)
 
 		self.theta = theta
 
@@ -46,15 +46,15 @@ class Environment():
 
 		for line in lines:
 		
-       	    temp = [s.strip() for s in line.split(' ')]
-	    	workspace_name = temp[0]
+       	            temp = [s.strip() for s in line.split(' ')]
+	    	    workspace_name = temp[0]
 	    	# convert to float
-	    	x = float(temp[1])
-	    	y = float(temp[2])
-	    	theta = float(temp[3])
+	    	    x = float(temp[1])
+	    	    y = float(temp[2])
+	    	    theta = float(temp[3])
 			
-			workspace = Workspace(x,y,theta,workspace_name)
-			self.database[workspace_name] = workspace
+		    workspace = Workspace(x,y,theta,workspace_name)
+		    self.database[workspace_name] = workspace
 
 	def get_workspace(self,name):
 		return self.database[name] 
@@ -68,12 +68,12 @@ class PathExecutor:
 	    file_name = rospy.get_param("bnt/goals_file")
 	    self.environment = Environment(file_name)
 	    rospy.wait_for_service('/move_base/clear_costmaps')
-		self.clear_costmaps = rospy.ServiceProxy('/move_base/clear_costmaps',Empty)
+	    self.clear_costmaps = rospy.ServiceProxy('/move_base/clear_costmaps',Empty)
 
-	def run(self):
+    def run(self):
 
 	    while True:
-		    goals = self.get_goals()
+	        goals = self.get_goals()
 	        self.execute_path(goals)
 
     def get_goals(self):
@@ -83,32 +83,36 @@ class PathExecutor:
 	    return [self.environment.get_workspace(s.strip()) for s in loc.split(' ')]
 		
 
-	def convert_ws_to_msg(self,workspace):
+    def convert_ws_to_msg(self,workspace):
 
-		action_goal = MoveBaseActionGoal()
+	    goal = MoveBaseGoal()
 	    q = tf.transformations.quaternion_from_euler(0, 0, workspace.pose.theta)
-	    action_goal.goal.target_pose.pose.position.x = workspace.pose.x
-	    action_goal.goal.target_pose.pose.position.y = workspace.pose.y
-	    action_goal.goal.target_pose.pose.orientation.x = q[0]
-	    action_goal.goal.target_pose.pose.orientation.y = q[1]
-	    action_goal.goal.target_pose.pose.orientation.z = q[2]
-	    action_goal.goal.target_pose.pose.orientation.w = q[3]
-	    action_goal.goal.target_pose.header.frame_id = 'map'
+	    goal.target_pose.pose.position.x = workspace.pose.x
+	    goal.target_pose.pose.position.y = workspace.pose.y
+	    goal.target_pose.pose.orientation.x = q[0]
+	    goal.target_pose.pose.orientation.y = q[1]
+	    goal.target_pose.pose.orientation.z = q[2]
+	    goal.target_pose.pose.orientation.w = q[3]
+	    goal.target_pose.header.frame_id = 'map'
 
-	    return action_goal
+	    return goal
 
-	def execute_path(self, path):
+    def execute_path(self, path):
 
-		for ws in path:
-			msg = self.convert_ws_to_msg(ws)
-			self.clear_costmaps()
-			self.move_base_client.send_goal(msg)
-			finish_before_timeout = self.move_base_client.wait_for_result(rospy.Duration(60))
+	for ws in path:
+		msg = self.convert_ws_to_msg(ws)
+		self.clear_costmaps()
+		self.move_base_client.send_goal(msg)
+		finish_before_timeout = self.move_base_client.wait_for_result(rospy.Duration(30))
 
-			if finish_before_timeout:
-	            state = self.move_base_client.get_state()
-	            if state == 3:
-	                rospy.sleep(5)
+		if finish_before_timeout:
+                     rospy.loginfo("dgdfgdfdgdfgf")
+	             state = self.move_base_client.get_state()
+	             if state == 3:
+	                 rospy.sleep(5)
+		else:
+		    self.move_base_client.cancel_goal()
+		    print "fail to reach the workspace ", ws.name
 
 if __name__ == '__main__':
     rospy.init_node('path_execute')
