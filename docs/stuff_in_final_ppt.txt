@@ -1,0 +1,25 @@
+
+Introduction of task
+List of tasks
+	Simulation :
+		Mapping & localization
+
+	Youbot:
+		youbot drivers
+        Mapping problem
+        Build Map(details about map server)
+        AMCL  (remapping laser Segmenting/tokenizing 
+       Move base(differential drive problem, precision)
+       may be map.yaml files
+	   Create node (coordinates of map)
+		Cost map update
+        Action lib 
+        clear/structure
+
+Launch file diagram
+class diagram
+sequence diagram
+
+Problems we faced
+Challenges
+
