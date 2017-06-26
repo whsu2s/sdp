@@ -15,6 +15,7 @@ List of tasks
 		Cost map update
         Action lib 
         clear/structure
+present rqt graph for each task
 
 Launch file diagram
 class diagram
