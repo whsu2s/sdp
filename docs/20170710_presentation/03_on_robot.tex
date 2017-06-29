@@ -3,17 +3,38 @@
 % !TeX root = presentation.tex
 \subsection{KUKA youBot}
 \begin{frame}{youBot Driver}
-    \begin{itemize}
-        \item Drive base
-        \item Laser scanners
-        \item Arm 
-        \item Joystick
-        \item Camera
-        \item Transformations
-        
-    \end{itemize}
+
+\begin{itemize}
+	\item \textbf{ROS Wrapper}
+	\begin{itemize}
+		\item Allows to write ROS programs for controlling youBot
+		\item Provides an interface between youBot driver and ROS framework
+		\item Allows to move the base and arm by sending ROS messages
+	\end{itemize}
+	\item \textbf{List of Drivers}
+		\begin{itemize}
+			\item Drive base
+			\item Laser scanners
+			\item Arm 
+			\item Joystick
+			\item Transformations
+		\end{itemize}
+\end{itemize}
+  
 \end{frame}
+
+
 \begin{frame}{Map building II}
+\begin{itemize}
+	\item \textbf{Problems}
+		\begin{itemize}
+			\item Messy Map
+		\end{itemize}
+	\item \textbf{Solutions}
+		\begin{itemize}
+			\item Incorrect transformation between laser frame and base link
+		\end{itemize}
+\end{itemize}
 \end{frame}
 \begin{frame}{Map building III}
     \centering
