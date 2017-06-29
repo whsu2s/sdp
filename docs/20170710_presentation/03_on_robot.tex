@@ -23,7 +23,7 @@
   
 \end{frame}
 
-
+%-----------------------
 \begin{frame}{Map building II}
 \begin{itemize}
 	\item \textbf{Problems}
@@ -36,6 +36,7 @@
 		\end{itemize}
 \end{itemize}
 \end{frame}
+%-----------------------
 \begin{frame}{Map building III}
     \centering
     \includegraphics[width=0.9\textwidth]{gfx/map_messy.png}
@@ -44,12 +45,39 @@
 \centering
 \includegraphics[width=0.8\textwidth]{gfx/map.png}
 \end{frame}
+%-----------------------
 \begin{frame}{Localization II}
 \end{frame}
+%-----------------------
 \begin{frame}{Navigation}
+\begin{itemize}
+	\item Requirements
+		\begin{itemize}
+			\item Map (map\_server)
+			\item Localization (amcl)
+			\item Odometry source
+			\item Transforms
+			\item Sensor sources
+			\item Goal (move\_base) 
+		\end{itemize}
+	\item Components
+		\begin{itemize}
+			\item Planners: global, local
+			\item Costmaps: global, local
+		\end{itemize}
+	\item Output: Velocity command (cmd\_vel)
+\end{itemize}
 \end{frame}
+%-----------------------
 \begin{frame}{Navigation - Local Planner}
+\begin{itemize}
+	\item Planner: dwa\_local\_planner
+	\item Given: plan, costmap, odom
+	\item Generates costs of transversing through map grids
+	\item Output: Velocity command
+\end{itemize}
 \end{frame}
+%-----------------------
 \begin{frame}{BNT.py}
     
     The node acts as path executor that reads  a set of user inputs and convert them to move\_base\_msgs.
@@ -58,9 +86,11 @@
         
         \item Functions:
         \begin{itemize}
-            \item 
-            \item Clear cost map
-            \item 
+        	\item Reads user inputs
+        	\item Reads workspace from file
+            \item Converts workspace to move\_base\_msgs
+            \item Clears cost map
+            \item Sends goal message
         \end{itemize}
     \end{itemize}
     
