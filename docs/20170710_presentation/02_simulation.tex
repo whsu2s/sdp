@@ -6,7 +6,7 @@
 
 \begin{frame}{Simulation}
     \begin{itemize}
-        \item Simple Two Dimensional Robot Simulator(STDR)	
+        \item Simple Two Dimensional Robot (STDR) simulator	
         \item Tasks  performed:
         \begin{itemize}
             \item Map Building
@@ -44,4 +44,19 @@
             \item Map 
         \end{itemize}
     \end{itemize}
+\end{frame}
+
+\begin{frame}{Localization I}
+\begin{itemize}
+	\item \textbf{Problems}
+	\begin{itemize}
+		\item Amcl could not find laser data on /scan topic
+		\item Amcl node crushes after some time
+	\end{itemize}
+	\item \textbf{Solutions}
+	\begin{itemize}
+		\item Remap /scan\_front and /scan\_rear to /scan topic
+		\item Because of incorrect transformations provided by stdr simulator
+	\end{itemize}
+\end{itemize}
 \end{frame}
