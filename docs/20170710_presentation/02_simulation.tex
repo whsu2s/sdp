@@ -18,11 +18,17 @@
     \includegraphics[width=90mm,height=55mm]{gfx/stdr_simulator}
     
 \end{frame}
+%---------------------------------------------------------------
 \begin{frame}{Map building I}
     \begin{itemize}
-        \item Gmapping is used to build the map
+        \item Gmapping is used to build 2-D occupancy grid map 
+        \item RAO-BLACKWELLIZED Mapping 
         \begin{itemize}
-            \item Uses laser scanner 
+            \item Individual map is associated to every sample
+            \item Each map is built given the observations and the
+trajectory
+            \item ????
+
         \end{itemize}
         \item Map Server
         \begin{itemize}
@@ -32,10 +38,19 @@
         
     \end{itemize}
 \end{frame}
+%----------------------------------------------------------------
 \begin{frame}{Localization I}
     \begin{itemize}
         \item Adaptive Monto Carlo Localization(AMCL) is used to localize the robot
         \item Uses particle filter to track the pose of robot
+        \begin{itemize}
+          \item Distribute samples according to initial pose
+          \item For each particle, predict next pose from motion model and add random noise
+          \item Update each particle\'s weight based on 
+likelihood of getting the sensor readings from
+that particle\'s hypothesis
+          \item Resample new set of particles according to its weight	
+        \end{itemize}
         \item What it needs?
         \begin{itemize}
             \item Laser scans
@@ -45,18 +60,20 @@
         \end{itemize}
     \end{itemize}
 \end{frame}
-
+%----------------------------------------------------------------
 \begin{frame}{Localization I}
 \begin{itemize}
 	\item \textbf{Problems}
 	\begin{itemize}
 		\item Amcl could not find laser data on /scan topic
 		\item Amcl node crushes after some time
+		\item Amcl is not working
 	\end{itemize}
 	\item \textbf{Solutions}
 	\begin{itemize}
 		\item Remap /scan\_front and /scan\_rear to /scan topic
 		\item Because of incorrect transformations provided by stdr simulator
+		\item Parameter odom_model_type should be omni-corrected
 	\end{itemize}
 \end{itemize}
 \end{frame}
