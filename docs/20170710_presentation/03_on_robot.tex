@@ -3,26 +3,39 @@
 % !TeX root = presentation.tex
 \subsection{KUKA youBot}
 \begin{frame}{youBot Driver}
-
 \begin{itemize}
-	\item \textbf{ROS Wrapper}
-	\begin{itemize}
-		\item Allows to write ROS programs for controlling youBot
-		\item Provides an interface between youBot driver and ROS framework
-		\item Allows to move the base and arm by sending ROS messages
-	\end{itemize}
-	\item \textbf{List of Drivers}
+	\item Driver for the KUKA youBot robot
+	\item Includes youbot\_oodl node 
 		\begin{itemize}
-			\item Drive base
-			\item Laser scanners
-			\item Arm 
-			\item Joystick
-			\item Transformations
+			\item Publishes to several topics and provides services for communication with the youBot
+			\item Initializes the base and arm for communication
+			\item Receives velocity commands for the base and arm, and position commands for the arm 
+		
 		\end{itemize}
+	\item Uses ROS wrapper for translation to ROS
 \end{itemize}
+
   
 \end{frame}
 
+%\begin{frame}
+%\begin{itemize}
+%	\item \textbf{ROS Wrapper}
+%	\begin{itemize}
+%		\item Allows to write ROS programs for controlling youBot
+%		\item Provides an interface between youBot driver and ROS framework
+%		\item Allows to move the base and arm by sending ROS messages
+%	\end{itemize}
+%	\item \textbf{List of Drivers}
+%	\begin{itemize}
+%		\item Drive base
+%		\item Laser scanners
+%		\item Arm 
+%		\item Joystick
+%		\item Transformations
+%	\end{itemize}
+%\end{itemize}
+%\end{frame}
 %-----------------------
 \begin{frame}{Map building II}
 \begin{itemize}
@@ -51,6 +64,7 @@
 \centering
 \includegraphics[width=0.8\textwidth]{gfx/map.png}
 \end{frame}
+
 %-----------------------
 \begin{frame}{Localization II}
 \begin{itemize}
