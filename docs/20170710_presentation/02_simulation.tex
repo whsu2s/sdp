@@ -37,29 +37,17 @@
         \item Adaptive Monto Carlo Localization(AMCL) is used to localize the robot
         \item Uses particle filter to track the pose of robot
 
-        \item What it needs?
+        \item Problems:
         \begin{itemize}
-            \item Laser scans
-            \item Initial pose
-            \item Transforms
-            \item Map 
+            \item AMCL could not find laser data on /scan topic
+            \item AMCL node crushes after some time
+            
+        \end{itemize}
+        \item Solutions:
+        \begin{itemize}
+            \item Remap /scan\_front and /scan\_rear to /scan topic
+            \item Because of transformations provided by STDR simulator
+            
         \end{itemize}
     \end{itemize}
-\end{frame}
-%----------------------------------------------------------------
-\begin{frame}{Localization I}
-\begin{itemize}
-	\item \textbf{Problems}
-	\begin{itemize}
-		\item Amcl could not find laser data on /scan topic
-		\item Amcl node crushes after some time
-		
-	\end{itemize}
-	\item \textbf{Solutions}
-	\begin{itemize}
-		\item Remap /scan\_front and /scan\_rear to /scan topic
-		\item Because of incorrect transformations provided by stdr simulator
-		
-	\end{itemize}
-\end{itemize}
 \end{frame}
