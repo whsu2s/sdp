@@ -76,27 +76,21 @@
 			\item Sensor sources
 			\item Goal (move\_base) 
 		\end{itemize}
-	\item Components
+	\item Planners: global, local
+	\item Costmaps: global, local
+	\item Local planner: dwa\_local\_planner
 		\begin{itemize}
-			\item Planners: global, local
-			\item Costmaps: global, local
-		\end{itemize}
+			\item Given: plan, costmap, odom
+			\item Generates costs of transversing through map grids
+			\item Output: Velocity command
+		\end{itemize} 
 	\item Output: Velocity command (cmd\_vel)
 \end{itemize}
 \end{frame}
 %-----------------------
-\begin{frame}{Navigation - Local Planner}
-\begin{itemize}
-	\item Planner: dwa\_local\_planner
-	\item Given: plan, costmap, odom
-	\item Generates costs of transversing through map grids
-	\item Output: Velocity command
-\end{itemize}
-\end{frame}
-%-----------------------
-\begin{frame}{BNT.py}
+\begin{frame}{Path executor}
     
-    The node acts as path executor that reads  a set of user inputs and convert them to move\_base\_msgs.
+    Path executor reads  a set of user inputs and convert them to move\_base\_msgs.
     \begin{itemize}
         \item Class: Position, Pose, Environment, Workspace, PathExecutor
         

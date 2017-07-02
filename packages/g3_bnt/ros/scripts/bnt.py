@@ -3,12 +3,23 @@ import rospy
 from geometry_msgs.msg import PoseStamped
 from std_msgs.msg import String
 import tf
-from math import radians, degrees
+import roslib
+roslib.load_manifest('g3_bnt')
+import rospy
+import actionlib
+ 
+from move_base.msgs import MoveBaseActionGoal, MoveBaseActionFeedback, MoveBaseActionResult
+from actionlib.msgs import GoalID, GoalStatusArray
 from std_srvs.srv import Empty
 
 def sender():
-    pub = rospy.Publisher('move_base_simple/goal', PoseStamped, queue_size=10)
+    #pub = rospy.Publisher('move_base_simple/goal', PoseStamped, queue_size=10)
     rospy.init_node('input_test')
+	
+	client = actionlib.SimpleActionClient('move_base/goal', MoveBaseActionGoal)
+    client.wait_for_server()
+
+
     file_name = rospy.get_param("bnt/goals_file")
     file = open(file_name,"r")
     file_list =  file.readlines()
@@ -24,40 +35,46 @@ def sender():
     
     print "list of workspaces \n " +str(database)	
 
-    pos = PoseStamped()
+    
     rospy.wait_for_service('/move_base/clear_costmaps')
     cc = rospy.ServiceProxy('/move_base/clear_costmaps',Empty)
     while not rospy.is_shutdown():
-        try:
-           
-            cc() 
-        except rospy.ServiceException, e:
-            print "Service call failed: %s"%e
+        
+		goal = MoveBaseGoal(order=15)
 
         loc = raw_input()
-	if (loc in database):
-	    rospy.loginfo("workspace entered :" + str(loc))
-		
-	    value = database[loc]
-	    # Euler to quaternion
-	    q = tf.transformations.quaternion_from_euler(0, 0, value[2])
-	    pos.pose.position.x = value[0]
-	    pos.pose.position.y = value[1]
-            pos.pose.orientation.x = q[0]
-            pos.pose.orientation.y = q[1]
-	    pos.pose.orientation.z = q[2]
-	    pos.pose.orientation.w = q[3]
-	    pos.header.frame_id = 'map'	
-	    rospy.loginfo('goal sent')
-	    rospy.loginfo('goal is being executed')
-	    pub.publish(pos)
-	else:
-	    print "please enter valid workspace"
+		if (loc in database):
+			rospy.loginfo("workspace entered :" + str(loc))
+			for l in loc:
+				value = database[l]
+				# Euler to quaternion
+				q = tf.transformations.quaternion_from_euler(0, 0, value[2])
+				goal.pose.position.x = value[0]
+				goal.pose.position.y = value[1]
+			    goal.pose.orientation.x = q[0]
+			    goal.pose.orientation.y = q[1]
+				goal.pose.orientation.z = q[2]
+				goal.pose.orientation.w = q[3]
+				goal.header.frame_id = 'map'
+				client.send_goal(goal)
+				try:
+				   
+				    cc() 
+				except rospy.ServiceException, e:
+				    print "Service call failed: %s"%e
+				rospy.loginfo('goal sent')
+				rospy.loginfo('goal is being executed')
+    			client.wait_for_result(rospy.Duration.from_sec(5.0))	
+				client.get_result()
+				rospy.loginfo('goal is finished')
+				#pub.publish(pos)
+				
+				
+		else:
+	    	print "please enter valid workspace"
 
 if __name__ == '__main__':
     sender()
     
-    
 
-    
         

@@ -79,10 +79,21 @@ class PathExecutor:
     def get_goals(self):
 						
 	    loc = raw_input()
-	    
-	    return [self.environment.get_workspace(s.strip()) for s in loc.split(' ')]
-		
+	    ws_list = []
+	    orientation_list = [N,S,W,E]
+	    ws_names = [s.strip() for s in loc.split(' ')]
+	    for name in ws_names:
+		ws_value = self.environment.get_workspace(name)
+		if ws_value not empty :
+		    ws_list.append(ws_value)
+		    name++
+		    if name==S:
+                        ws_list.append()
+	 	    elif name==N:
 
+	
+	
+		
     def convert_ws_to_msg(self,workspace):
 
 	    goal = MoveBaseGoal()
@@ -106,7 +117,7 @@ class PathExecutor:
 		finish_before_timeout = self.move_base_client.wait_for_result(rospy.Duration(30))
 
 		if finish_before_timeout:
-                     rospy.loginfo("dgdfgdfdgdfgf")
+                     rospy.loginfo("reached")
 	             state = self.move_base_client.get_state()
 	             if state == 3:
 	                 rospy.sleep(5)
