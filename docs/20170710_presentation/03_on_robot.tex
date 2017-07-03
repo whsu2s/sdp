@@ -79,15 +79,12 @@
 \begin{frame}{Navigation I}
 \begin{itemize}
 	\item Planners: global, local
-	\item Costmaps: global, local
-	\item Local planner: dwa\_local\_planner
-		\begin{itemize}
-			\item Given: plan, costmap, odom
-			\item Generates costs of transversing through map grids
-			\item Output: Velocity command
-		\end{itemize} 
+	\item Costmaps: global, local (dwa\_local\_planner)
 	\item Output: Velocity command (cmd\_vel)
 \end{itemize}
+\centering
+    \includegraphics[scale=0.26]{gfx/nav.png}
+\footnote{http://wiki.ros.org/move\_base}
 \end{frame}
 %-----------------------
 \begin{frame}{Navigation II}
@@ -101,7 +98,6 @@
 			\item dwa\_local\_planner
 		\end{itemize}
 \end{itemize}
-
 \end{frame}
 %-----------------------
 \begin{frame}{Path executor}
