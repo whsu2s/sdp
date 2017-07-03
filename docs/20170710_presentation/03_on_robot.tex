@@ -5,13 +5,22 @@
 \begin{frame}{youBot Driver}
 \begin{itemize}
 	\item Driver for the KUKA youBot robot
-	\item Includes youbot\_oodl node 
+	\item youBot API represents robot system as a combination of sub-systems
+	%\item youBot API represents manipulator arm and base platform as the combination of several joints
+	%\item Each joint is defined as a combination of a motor and a gear box
+	\item Contain three main classes
 		\begin{itemize}
-			\item Publishes to several topics and provides services for communication with the youBot
-			\item Initializes the base and arm for communication
-			\item Receives velocity commands for the base and arm, and position commands for the arm 
+			\item youBot Manipulator
+			\item youBot Base
+			\item youBot Joint 
+		\end{itemize} 
+	%\item Includes youbot\_oodl node 
+	%	\begin{itemize}
+	%		\item Publishes to several topics and provides services for communication with the youBot
+	%		\item Initializes the base and arm for communication
+	%		\item Receives velocity commands for the base and arm, and position commands for the arm 
 		
-		\end{itemize}
+	%	\end{itemize}
 	\item Uses ROS wrapper for translation to ROS
 \end{itemize}
 
